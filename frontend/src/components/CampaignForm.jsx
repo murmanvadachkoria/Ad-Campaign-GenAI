@@ -246,7 +246,7 @@ export default function CampaignForm({ onReportReady, isGenerating, setGeneratin
         <div className="section-block">
           <h2 className="section-title">Input Assets</h2>
           <p className="section-hint">
-            Drop existing product images into <code>backend/assets/input/</code> named after your product
+            Drop existing product images named after your product
             (e.g. <code>citrus_burst.png</code>). They'll be reused automatically — no new generation needed.
           </p>
 
