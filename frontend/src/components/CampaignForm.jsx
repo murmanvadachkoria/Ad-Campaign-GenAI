@@ -91,9 +91,24 @@ export default function CampaignForm({ onReportReady, isGenerating, setGeneratin
     setProducts(prev => prev.filter((_, i) => i !== index))
   }
 
-  const handleAssetFiles = (e) => {
+  const handleAssetFiles = async (e) => {
     const files = Array.from(e.target.files)
+    if (!files.length) return
     setInputAssets(files)
+
+    const formData = new FormData()
+    files.forEach(f => formData.append('assets', f))
+
+    try {
+      await fetch('/api/assets/upload', { method: 'POST', body: formData })
+      const r = await fetch('/api/assets/input')
+      const d = await r.json()
+      setAvailAssets(d.assets || [])
+    } catch (err) {
+      console.error('uploading image failed');
+
+      throw err;
+    }
   }
 
   const handleGenerate = async () => {
@@ -279,7 +294,7 @@ export default function CampaignForm({ onReportReady, isGenerating, setGeneratin
                 <span className="file-drop-icon">⬆</span>
                 {inputAssets.length > 0
                   ? `${inputAssets.length} file${inputAssets.length > 1 ? 's' : ''} selected`
-                  : 'Click to browse or drag & drop images'}
+                  : 'Click to browse'}
               </label>
             </div>
           </div>

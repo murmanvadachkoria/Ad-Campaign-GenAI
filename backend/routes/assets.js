@@ -2,6 +2,7 @@ import express from 'express';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import multer from 'multer';
 import { readLogs } from '../services/loggingService.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -9,6 +10,32 @@ const ASSETS_DIR = path.join(__dirname, '..', 'assets', 'input');
 const OUTPUT_DIR = path.join(__dirname, '..', 'output');
 
 const router = express.Router();
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, ASSETS_DIR),
+    filename: (req, file, cb) => cb(null, file.originalname),
+  }),
+  fileFilter: (req, file, cb) => {
+    if (/\.(png|jpg|jpeg|webp)$/i.test(file.originalname)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  },
+});
+
+/**
+ * POST /api/assets/upload
+ * Upload one or more image files to assets/input/
+ */
+router.post('/upload', async (req, res, next) => {
+  await fs.mkdir(ASSETS_DIR, { recursive: true });
+  next();
+}, upload.array('assets'), (req, res) => {
+  const uploaded = req.files.map(f => ({ filename: f.filename }));
+  res.json({ uploaded });
+});
 
 /**
  * GET /api/assets/input
