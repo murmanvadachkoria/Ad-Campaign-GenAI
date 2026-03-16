@@ -1,0 +1,26 @@
+# IDE
+.idea
+.vscode
+
+# Dependencies
+node_modules
+backend/node_modules
+frontend/node_modules
+
+# Environment
+backend/.env
+
+# Generated outputs (keep folder structure, ignore contents)
+backend/assets/input/*
+backend/output/*
+
+# Frontend build
+frontend/dist
+
+# Logs
+*.log
+backend/output/pipeline.log.jsonl
+
+# OS
+.DS_Store
+Thumbs.db
