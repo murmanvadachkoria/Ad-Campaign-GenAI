@@ -10,7 +10,7 @@ function buildImagePrompt(product, brief, localizedMessage) {
         `Target region: ${brief.targetRegion}. Target audience: ${brief.targetAudience}.`,
         `Add ${localizedMessage} to the image, in a way that it displays professional advertising`,
         `Mood/style: vibrant, commercial, high-end lifestyle photography aesthetic.`,
-        `No text, no words, no logos in the image — clean product-focused composition.`,
+        `No logos in the image — clean product-focused composition.`,
         `Photorealistic, studio-quality lighting, suitable for social media advertising.`,
     ];
 }
