@@ -11,10 +11,8 @@ A full-stack proof-of-concept that automates creative asset generation for local
 3. [Quick Start](#quick-start)
 4. [How to Run](#how-to-run)
 5. [Example Input & Output](#example-input--output)
-6. [Key Design Decisions](#key-design-decisions)
-7. [Assumptions & Limitations](#assumptions--limitations)
-8. [Project Structure](#project-structure)
-9. [API Reference](#api-reference)
+6. [Project Structure](#project-structure)
+7. [API Reference](#api-reference)
 
 ---
 
