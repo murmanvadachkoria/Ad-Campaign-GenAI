@@ -214,50 +214,6 @@ backend/output/
   pipeline.log.jsonl              ← append-only run log
 ```
 
-Each image has the French-translated message overlaid as a text badge at the bottom:
-
-> *"Carburez votre journée avec le meilleur de la nature. Sans compromis."*
-
-### Report JSON (excerpt)
-
-```json
-{
-  "sessionId": "a3f21b9c",
-  "duration": "18.4s",
-  "timestamp": "2025-01-15T14:32:10.000Z",
-  "summary": {
-    "totalImages": 6,
-    "products": 2,
-    "aspectRatios": ["1:1", "9:16", "16:9"],
-    "locale": "fr"
-  },
-  "compliance": {
-    "status": "warnings",
-    "issues": [],
-    "warnings": [
-      { "type": "brand_voice", "message": "No preferred brand voice keywords detected" }
-    ],
-    "passed": [
-      "No prohibited legal language detected",
-      "Campaign message length OK (47 chars)",
-      "Product count OK (2 products)"
-    ]
-  },
-  "results": [
-    {
-      "product": "Citrus Burst",
-      "ratio": "1:1",
-      "width": 1024,
-      "height": 1024,
-      "localizedMessage": "Zéro sucre. Tout le peps. Citrus Burst — votre boisson quotidienne.",
-      "locale": "fr",
-      "reusedAsset": false,
-      "url": "/output/a3f21b9c/citrus_burst/citrus_burst_1x1.png"
-    }
-  ]
-}
-```
-
 ---
 
 ## Project Structure
@@ -272,7 +228,7 @@ campaign-pipeline/
 │   ├── server.js                 # Express app, static serving, routes
 │   ├── routes/
 │   │   ├── campaign.js           # POST /generate, POST /validate
-│   │   └── assets.js             # GET /input, /output/:id, /logs
+│   │   └── assets.js             # POST /upload, GET /input, /output/:id, /logs
 │   ├── services/
 │   │   ├── campaignService.js    # Core pipeline orchestration
 │   │   ├── translationService.js # GPT locale translation + cache
@@ -349,6 +305,10 @@ Run compliance checks only — no image generation, no API cost.
   }
 }
 ```
+
+### `POST /api/assets/upload`
+
+Upload one or more image files to `assets/input/`. Files are saved using their original filename and will be automatically reused by the pipeline when their name matches a product slug.
 
 ### `GET /api/assets/input`
 
